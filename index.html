@@ -9,17 +9,20 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #0f1117;
-      --surface:    #1a1d27;
-      --border:     #2a2d3a;
-      --accent:     #7c6df8;
-      --accent-dim: #3d3680;
-      --text:       #e8e9f0;
-      --muted:      #8b8fa8;
-      --pro:        #34d399;
-      --con:        #f87171;
-      --tag-bg:     #252838;
-      --radius:     14px;
+      --bg:           #0f1117;
+      --surface:      #1a1d27;
+      --surface-2:    #21243300;
+      --border:       #2a2d3a;
+      --accent:       #7c6df8;
+      --accent-dim:   #3d3680;
+      --text:         #e8e9f0;
+      --muted:        #8b8fa8;
+      --pro:          #34d399;
+      --con:          #f87171;
+      --tag-bg:       #252838;
+      --chip-active:  #7c6df8;
+      --radius:       14px;
+      --search-bg:    #1e2130;
     }
 
     body {
@@ -33,10 +36,12 @@
       padding: 40px 16px 80px;
     }
 
-    /* ── Header ── */
+    /* ── Site header ── */
     .site-header {
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 36px;
+      width: 100%;
+      max-width: 780px;
     }
 
     .site-header .eyebrow {
@@ -59,9 +64,126 @@
       margin-top: 10px;
       color: var(--muted);
       font-size: 15px;
-      max-width: 400px;
+      max-width: 420px;
       margin-inline: auto;
       line-height: 1.6;
+    }
+
+    /* ── Controls (search + filters) ── */
+    .controls {
+      width: 100%;
+      max-width: 780px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Search */
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    #search {
+      width: 100%;
+      background: var(--search-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px 12px 42px;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    #search::placeholder { color: var(--muted); }
+    #search:focus { border-color: var(--accent); }
+
+    /* Filter rows */
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      min-width: 80px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 13px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* ── Results meta ── */
+    .results-meta {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .results-meta .count {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .results-meta .count span {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Card grid ── */
+    .card-grid {
+      width: 100%;
+      max-width: 780px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
     }
 
     /* ── Card ── */
@@ -69,20 +191,31 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      width: 100%;
-      max-width: 640px;
       overflow: hidden;
+      transition: border-color 0.15s;
     }
+
+    .card.featured {
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 1px var(--accent-dim), 0 4px 24px rgba(124,109,248,0.12);
+    }
+
+    .card:hover { border-color: #3d4060; }
+    .card.featured:hover { border-color: var(--accent); }
 
     /* Card top bar */
     .card-topbar {
       background: var(--accent-dim);
-      padding: 14px 24px;
+      padding: 12px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 8px;
+    }
+
+    .card:not(.featured) .card-topbar {
+      background: #1e2130;
     }
 
     .card-topbar .label {
@@ -93,58 +226,108 @@
       color: #c4beff;
     }
 
+    .card:not(.featured) .card-topbar .label {
+      color: var(--muted);
+    }
+
     .card-topbar .date-stamp {
       font-size: 12px;
       color: #a89ff5;
     }
 
-    /* Card body */
-    .card-body {
-      padding: 28px 28px 32px;
+    .card:not(.featured) .card-topbar .date-stamp {
+      color: var(--muted);
     }
 
-    /* Tool pill */
-    .tool-pill {
-      display: inline-flex;
-      align-items: center;
+    /* Card body */
+    .card-body {
+      padding: 24px 24px 28px;
+    }
+
+    /* Tags row */
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
       gap: 6px;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
       margin-bottom: 14px;
     }
 
-    .tool-pill .dot {
-      width: 7px;
-      height: 7px;
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .tag.category { color: var(--accent); border-color: var(--accent-dim); }
+    .tag.usecase  { color: #6ee7b7; border-color: #1d4a38; }
+
+    .tag .dot {
+      width: 5px; height: 5px;
       border-radius: 50%;
-      background: var(--accent);
+      background: currentColor;
+      opacity: 0.7;
     }
 
     /* Feature name */
     .feature-name {
-      font-size: clamp(20px, 4vw, 26px);
+      font-size: clamp(18px, 3.5vw, 23px);
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 1.2;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
-    .feature-released {
-      font-size: 12px;
+    .tool-name {
+      font-size: 13px;
       color: var(--muted);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
+
+    .tool-name strong { color: var(--text); }
+
+    /* Expandable body */
+    .card-expand {
+      display: none;
+    }
+
+    .card.featured .card-expand,
+    .card.open .card-expand {
+      display: block;
+    }
+
+    /* Toggle button */
+    .toggle-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      margin-top: 14px;
+      transition: all 0.15s;
+    }
+
+    .toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .card.featured .toggle-btn { display: none; }
 
     /* Divider */
     .divider {
       height: 1px;
       background: var(--border);
-      margin: 20px 0;
+      margin: 18px 0;
     }
 
     /* Section label */
@@ -159,13 +342,9 @@
 
     /* Body text */
     .body-text {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.7;
       color: var(--text);
-    }
-
-    .body-text + .body-text {
-      margin-top: 8px;
     }
 
     /* Who it's for */
@@ -174,13 +353,13 @@
       background: var(--tag-bg);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 14px;
+      padding: 5px 11px;
+      font-size: 13px;
       color: var(--text);
       margin-top: 4px;
     }
 
-    /* Pros / Cons list */
+    /* Pros / Cons */
     .verdict-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -188,12 +367,12 @@
       margin-top: 4px;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 500px) {
       .verdict-grid { grid-template-columns: 1fr; }
     }
 
     .verdict-col h4 {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -211,29 +390,29 @@
     }
 
     .verdict-col ul li {
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 13px;
+      line-height: 1.55;
       color: var(--text);
       display: flex;
-      gap: 8px;
+      gap: 7px;
     }
 
     .verdict-col ul li::before {
       flex-shrink: 0;
-      font-size: 13px;
-      margin-top: 1px;
+      font-size: 12px;
+      margin-top: 2px;
     }
 
     .verdict-col.pros ul li::before { content: "✓"; color: var(--pro); }
     .verdict-col.cons ul li::before { content: "✗"; color: var(--con); }
 
-    /* User sentiment */
+    /* Sentiment */
     .sentiment-box {
       background: var(--tag-bg);
       border-left: 3px solid var(--accent);
       border-radius: 0 8px 8px 0;
-      padding: 14px 16px;
-      font-size: 14px;
+      padding: 13px 15px;
+      font-size: 13px;
       line-height: 1.65;
       color: var(--text);
       font-style: italic;
@@ -244,7 +423,7 @@
       background: linear-gradient(135deg, #1e1b38 0%, #1a1d27 100%);
       border: 1px solid var(--accent-dim);
       border-radius: 10px;
-      padding: 18px 20px;
+      padding: 16px 18px;
     }
 
     .verdict-box .verdict-label {
@@ -257,7 +436,7 @@
     }
 
     .verdict-box p {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.65;
       color: var(--text);
       font-weight: 500;
@@ -268,131 +447,195 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       margin-top: 4px;
     }
 
     .sources-list li a {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--accent);
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
-    .sources-list li a::before {
-      content: "↗";
-      font-size: 11px;
-      opacity: 0.7;
+    .sources-list li a::before { content: "↗"; font-size: 10px; opacity: 0.7; }
+    .sources-list li a:hover { text-decoration: underline; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      width: 100%;
+      max-width: 780px;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      display: none;
     }
 
-    .sources-list li a:hover {
-      text-decoration: underline;
-    }
+    .empty-state h3 { font-size: 18px; margin-bottom: 8px; color: var(--text); }
+    .empty-state p  { font-size: 14px; line-height: 1.6; }
 
-    /* Footer */
+    /* ── Footer ── */
     .site-footer {
-      margin-top: 40px;
+      margin-top: 48px;
       text-align: center;
       font-size: 13px;
       color: var(--muted);
       line-height: 1.7;
     }
 
-    .site-footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
+    .site-footer a { color: var(--accent); text-decoration: none; }
     .site-footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
-  <!-- ── Site header ── -->
+  <!-- ── Header ── -->
   <header class="site-header">
     <p class="eyebrow">AI Builder Weekly</p>
     <h1>One AI feature.<br>Every Saturday.</h1>
     <p>Researched and filtered through a PM lens — so you don't have to wade through the noise.</p>
   </header>
 
-  <!-- ── Feature card ── -->
-  <div class="card">
+  <!-- ── Controls ── -->
+  <div class="controls">
 
-    <div class="card-topbar">
-      <span class="label">Feature of the week</span>
-      <span class="date-stamp">As of 3 May 2026</span>
+    <!-- Search -->
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input id="search" type="text" placeholder="Search features, tools, or use cases…" autocomplete="off" />
     </div>
 
-    <div class="card-body">
-
-      <!-- Tool + Feature name -->
-      <div class="tool-pill"><span class="dot"></span>Bolt.new</div>
-      <h2 class="feature-name">Visual Version History</h2>
-      <p class="feature-released">Released: March 2026</p>
-
-      <!-- What it does -->
-      <p class="section-label">What it does</p>
-      <p class="body-text">Visual Version History lets you browse a visual timeline of every previous state of your project and restore any of them with one click — no Git knowledge required. Think of it as an undo button that goes back days, not just one step.</p>
-
-      <div class="divider"></div>
-
-      <!-- Who it's for -->
-      <p class="section-label">Who it's for</p>
-      <span class="for-tag">Non-coders and PMs prototyping with AI builders who are afraid to break a working version</span>
-
-      <div class="divider"></div>
-
-      <!-- Pros / Cons -->
-      <p class="section-label">The PM take</p>
-      <div class="verdict-grid">
-        <div class="verdict-col pros">
-          <h4>Pros</h4>
-          <ul>
-            <li>Removes the biggest psychological barrier to experimenting — fear of breaking something that works</li>
-            <li>No Git setup or command line knowledge needed; purely visual</li>
-            <li>Encourages faster iteration because reverting is instant and risk-free</li>
-          </ul>
-        </div>
-        <div class="verdict-col cons">
-          <h4>Cons / caveats</h4>
-          <ul>
-            <li>Only available within Bolt.new — doesn't replace a real Git workflow for production code</li>
-            <li>Version history depth is limited; long-running projects may not retain every state indefinitely</li>
-            <li>Won't help if your project has already burned through Bolt's free token allowance</li>
-          </ul>
-        </div>
+    <!-- Category filter -->
+    <div class="filter-row">
+      <span class="filter-label">Category</span>
+      <div class="chips" id="cat-chips">
+        <span class="chip active" data-filter="cat" data-value="all">All</span>
+        <span class="chip" data-filter="cat" data-value="App Builders">App Builders</span>
+        <span class="chip" data-filter="cat" data-value="LLMs">LLMs</span>
+        <span class="chip" data-filter="cat" data-value="Workflow Builders">Workflow Builders</span>
+        <span class="chip" data-filter="cat" data-value="Design & Collaboration">Design & Collab</span>
+        <span class="chip" data-filter="cat" data-value="PM & Analytics">PM & Analytics</span>
       </div>
-
-      <div class="divider"></div>
-
-      <!-- User sentiment -->
-      <p class="section-label">What real users say</p>
-      <div class="sentiment-box">
-        The most common complaint about Bolt has been token burn — users report exhausting the free tier in 3–4 days of active development. Version History doesn't solve that, but it does address a separate pain that comes up constantly in community forums: the anxiety of making a change and not being able to get back. Several users on Reddit and Product Hunt describe it as the feature that finally made Bolt feel safe to use for real projects.
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Verdict -->
-      <div class="verdict-box">
-        <p class="verdict-label">Verdict</p>
-        <p>If you're a PM or non-coder using Bolt.new to prototype ideas, Visual Version History is worth turning on immediately — it makes the experimentation loop genuinely lower-stakes. It won't fix Bolt's token costs, but it removes the friction that stops people from trying bold changes. Try it this week before you build anything you'd be upset to lose.</p>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Sources -->
-      <p class="section-label">Sources</p>
-      <ul class="sources-list">
-        <li><a href="https://bolt.new/changelog" target="_blank" rel="noopener">Bolt.new official changelog</a></li>
-        <li><a href="https://bolt.new/pricing" target="_blank" rel="noopener">Bolt.new pricing page</a></li>
-        <li><a href="https://www.reddit.com/r/bolt" target="_blank" rel="noopener">r/bolt — community discussion</a></li>
-        <li><a href="https://www.producthunt.com/products/bolt-new" target="_blank" rel="noopener">Bolt.new on Product Hunt</a></li>
-      </ul>
-
     </div>
+
+    <!-- Use case filter -->
+    <div class="filter-row">
+      <span class="filter-label">PM Use Case</span>
+      <div class="chips" id="use-chips">
+        <span class="chip active" data-filter="use" data-value="all">All</span>
+        <span class="chip" data-filter="use" data-value="Prototyping">Prototyping</span>
+        <span class="chip" data-filter="use" data-value="Research">Research</span>
+        <span class="chip" data-filter="use" data-value="Writing & Docs">Writing & Docs</span>
+        <span class="chip" data-filter="use" data-value="Data Analysis">Data Analysis</span>
+        <span class="chip" data-filter="use" data-value="Roadmapping">Roadmapping</span>
+        <span class="chip" data-filter="use" data-value="User Research">User Research</span>
+        <span class="chip" data-filter="use" data-value="Workflow Automation">Workflow Automation</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Results meta ── -->
+  <div class="results-meta">
+    <p class="count">Showing <span id="result-count">1</span> feature card</p>
+  </div>
+
+  <!-- ── Card grid ── -->
+  <div class="card-grid" id="card-grid">
+
+    <!-- ─ CARD 1 (featured / current week) ─ -->
+    <div class="card featured"
+         data-category="App Builders"
+         data-usecases="Prototyping,Workflow Automation"
+         data-search="bolt visual version history app builders prototyping non-coder restore undo">
+
+      <div class="card-topbar">
+        <span class="label">⭐ This week's pick — Week 1</span>
+        <span class="date-stamp">As of 3 May 2026</span>
+      </div>
+
+      <div class="card-body">
+
+        <div class="tags-row">
+          <span class="tag category"><span class="dot"></span>App Builders</span>
+          <span class="tag usecase"><span class="dot"></span>Prototyping</span>
+          <span class="tag usecase"><span class="dot"></span>Workflow Automation</span>
+        </div>
+
+        <h2 class="feature-name">Visual Version History</h2>
+        <p class="tool-name"><strong>Bolt.new</strong> · Released March 2026</p>
+
+        <div class="card-expand">
+
+          <p class="section-label">What it does</p>
+          <p class="body-text">Visual Version History lets you browse a visual timeline of every previous state of your project and restore any of them with one click — no Git knowledge required. Think of it as an undo button that goes back days, not just one step.</p>
+
+          <div class="divider"></div>
+
+          <p class="section-label">Who it's for</p>
+          <span class="for-tag">Non-coders and PMs prototyping with AI builders who are afraid to break a working version</span>
+
+          <div class="divider"></div>
+
+          <p class="section-label">The PM take</p>
+          <div class="verdict-grid">
+            <div class="verdict-col pros">
+              <h4>Pros</h4>
+              <ul>
+                <li>Removes the biggest psychological barrier to experimenting — fear of breaking something that works</li>
+                <li>No Git setup or command line knowledge needed; purely visual</li>
+                <li>Encourages faster iteration because reverting is instant and risk-free</li>
+              </ul>
+            </div>
+            <div class="verdict-col cons">
+              <h4>Cons / caveats</h4>
+              <ul>
+                <li>Only available within Bolt.new — doesn't replace a real Git workflow for production code</li>
+                <li>Version history depth is limited; long-running projects may not retain every state indefinitely</li>
+                <li>Won't help if your project has already burned through Bolt's free token allowance</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="section-label">What real users say</p>
+          <div class="sentiment-box">
+            The most common complaint about Bolt has been token burn — users report exhausting the free tier in 3–4 days of active development. Version History doesn't solve that, but it does address a separate pain that comes up constantly in community forums: the anxiety of making a change and not being able to get back. Several users describe it as the feature that finally made Bolt feel safe to use for real projects.
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="verdict-box">
+            <p class="verdict-label">Verdict</p>
+            <p>If you're a PM or non-coder using Bolt.new to prototype ideas, Visual Version History is worth turning on immediately — it makes the experimentation loop genuinely lower-stakes. It won't fix Bolt's token costs, but it removes the friction that stops people from trying bold changes. Try it this week before you build anything you'd be upset to lose.</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="section-label">Sources</p>
+          <ul class="sources-list">
+            <li><a href="https://bolt.new/changelog" target="_blank" rel="noopener">Bolt.new official changelog</a></li>
+            <li><a href="https://bolt.new/pricing" target="_blank" rel="noopener">Bolt.new pricing page</a></li>
+            <li><a href="https://www.reddit.com/r/bolt" target="_blank" rel="noopener">r/bolt — community discussion</a></li>
+            <li><a href="https://www.producthunt.com/products/bolt-new" target="_blank" rel="noopener">Bolt.new on Product Hunt</a></li>
+          </ul>
+
+        </div><!-- /card-expand -->
+
+      </div><!-- /card-body -->
+    </div><!-- /card -->
+
+  </div><!-- /card-grid -->
+
+  <!-- ── Empty state ── -->
+  <div class="empty-state" id="empty-state">
+    <h3>No results found</h3>
+    <p>Try a different search term or clear the filters.</p>
   </div>
 
   <!-- ── Footer ── -->
@@ -400,6 +643,84 @@
     <p>Built by <a href="https://www.linkedin.com/in/tdayashanker" target="_blank" rel="noopener">TD</a> · Updated every Saturday · No blog posts were scraped or summarised</p>
     <p style="margin-top:6px;">All research is original — changelogs, product pages, and paraphrased community sentiment.</p>
   </footer>
+
+  <script>
+    // ── State ──
+    let activeCat = 'all';
+    let activeUse = 'all';
+    let searchVal  = '';
+
+    const grid       = document.getElementById('card-grid');
+    const cards      = Array.from(grid.querySelectorAll('.card'));
+    const countEl    = document.getElementById('result-count');
+    const emptyEl    = document.getElementById('empty-state');
+
+    // ── Filter logic ──
+    function applyFilters() {
+      let visible = 0;
+
+      cards.forEach(card => {
+        const cat      = card.dataset.category || '';
+        const usecases = (card.dataset.usecases || '').split(',').map(s => s.trim());
+        const search   = (card.dataset.search || '').toLowerCase();
+
+        const catMatch  = activeCat === 'all' || cat === activeCat;
+        const useMatch  = activeUse === 'all' || usecases.includes(activeUse);
+        const srchMatch = searchVal === '' || search.includes(searchVal);
+
+        const show = catMatch && useMatch && srchMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      countEl.textContent = visible;
+      const noun = visible === 1 ? 'feature card' : 'feature cards';
+      countEl.parentElement.innerHTML = `Showing <span id="result-count">${visible}</span> ${noun}`;
+
+      emptyEl.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    // ── Chip clicks ──
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const filterType = chip.dataset.filter;
+        const value      = chip.dataset.value;
+
+        // Deactivate siblings
+        document.querySelectorAll(`.chip[data-filter="${filterType}"]`).forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        if (filterType === 'cat') activeCat = value;
+        if (filterType === 'use') activeUse = value;
+
+        applyFilters();
+      });
+    });
+
+    // ── Search ──
+    document.getElementById('search').addEventListener('input', e => {
+      searchVal = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+
+    // ── Expand / collapse (for non-featured cards) ──
+    cards.forEach(card => {
+      if (card.classList.contains('featured')) return;
+
+      const btn = document.createElement('button');
+      btn.className = 'toggle-btn';
+      btn.textContent = 'Read more ↓';
+      card.querySelector('.card-body').appendChild(btn);
+
+      btn.addEventListener('click', () => {
+        const open = card.classList.toggle('open');
+        btn.textContent = open ? 'Show less ↑' : 'Read more ↓';
+      });
+    });
+
+    // ── Init ──
+    applyFilters();
+  </script>
 
 </body>
 </html>
