@@ -16,13 +16,13 @@ All content is original research drawn from official changelogs and paraphrased 
 
 ## Live demo
 
-[Coming Saturday 3 May 2026]
+Open `index.html` in any browser. Three weekly cards are live: Week 1 (Bolt.new — Visual Version History), Week 2 (Claude — Projects + Scoped Memory), and Week 3 (Claude Code — Subagents).
 
 ## PM notes
 
 - **Hypothesis:** PMs who are time-poor and opinion-hungry will find one deeply researched feature card more useful than a weekly roundup of fifteen shallow summaries. Depth beats breadth when the audience is busy and the topic is fast-moving.
 
-- **What I cut from scope:** Automated content fetching, a CMS or database, archive of past weeks, newsletter delivery, user accounts, and cross-tool feature comparisons. Week 1 is a single hardcoded HTML page — the value is the editorial judgment, not the engineering.
+- **What I cut from scope:** Automated content fetching, a CMS or database, newsletter delivery, user accounts, and cross-tool feature comparisons. The app is a single hardcoded HTML page — the value is the editorial judgment, not the engineering. Past weeks now stack as a browsable archive with search, category/use-case filters, sort-by-date, and expand/collapse-all.
 
 - **Known limitations:** Content is updated manually each week, so it reflects one person's research and point of view. User sentiment is paraphrased from Reddit, Product Hunt, and community forums — which skew toward power users with strong opinions. Every card is stamped with a date so readers know exactly how fresh the research is.
 
@@ -37,9 +37,9 @@ All content is original research drawn from official changelogs and paraphrased 
 ## Stack
 
 - **Frontend:** HTML + CSS (single file, no framework)
-- **Content:** Hardcoded in the HTML for week 1 — updated manually each Saturday
+- **Content:** Hardcoded card markup in the HTML — a new card is added manually each Saturday
 - **Hosting:** TBD
 - **Built with:** Claude Code
 
 ## Status
-Currently in development — shipping Saturday 3 May 2026
+Live — shipping a new card every Saturday. Latest: Week 3 (20 June 2026) — Claude Code Subagents.

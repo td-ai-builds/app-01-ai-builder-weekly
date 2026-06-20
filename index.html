@@ -177,6 +177,32 @@
       font-weight: 600;
     }
 
+    .meta-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
     /* ── Card grid ── */
     .card-grid {
       width: 100%;
@@ -297,7 +323,6 @@
       display: none;
     }
 
-    .card.featured .card-expand,
     .card.open .card-expand {
       display: block;
     }
@@ -320,8 +345,6 @@
       border-color: var(--accent);
       color: var(--accent);
     }
-
-    .card.featured .toggle-btn { display: none; }
 
     /* Divider */
     .divider {
@@ -541,20 +564,109 @@
 
   <!-- ── Results meta ── -->
   <div class="results-meta">
-    <p class="count">Showing <span id="result-count">1</span> feature card</p>
+    <p class="count">Showing <span id="result-count">1</span> <span id="result-noun">feature card</span></p>
+    <div class="meta-actions">
+      <button class="action-btn" id="sort-btn" type="button">↓ Newest first</button>
+      <button class="action-btn" id="expand-btn" type="button">Expand all</button>
+    </div>
   </div>
 
   <!-- ── Card grid ── -->
   <div class="card-grid" id="card-grid">
 
-    <!-- ─ CARD 2 (featured / current week) ─ -->
+    <!-- ─ CARD 3 (featured / current week) ─ -->
     <div class="card featured"
+         data-category="App Builders"
+         data-usecases="Prototyping,Workflow Automation,Research"
+         data-date="2026-06-20"
+         data-search="claude code subagents agents specialised parallel context window delegation app builders prototyping workflow automation research anthropic terminal cli">
+
+      <div class="card-topbar">
+        <span class="label">⭐ This week's pick — Week 3</span>
+        <span class="date-stamp">As of 20 June 2026</span>
+      </div>
+
+      <div class="card-body">
+
+        <div class="tags-row">
+          <span class="tag category"><span class="dot"></span>App Builders</span>
+          <span class="tag usecase"><span class="dot"></span>Prototyping</span>
+          <span class="tag usecase"><span class="dot"></span>Workflow Automation</span>
+          <span class="tag usecase"><span class="dot"></span>Research</span>
+        </div>
+
+        <h2 class="feature-name">Subagents</h2>
+        <p class="tool-name"><strong>Claude Code</strong> · Available on Pro &amp; Max plans</p>
+
+        <div class="card-expand">
+
+          <p class="section-label">What it does</p>
+          <p class="body-text">Subagents are specialised assistants you define once — each with its own prompt, its own tool permissions, and crucially its own separate context window. Instead of running one long conversation that slowly fills up with research, file dumps and dead ends, you delegate a focused job ("review this diff", "search the codebase", "draft the release notes") to a purpose-built agent. It does the work in isolation and hands back only the conclusion, so your main thread stays clean and on-track.</p>
+
+          <div class="divider"></div>
+
+          <p class="section-label">Who it's for</p>
+          <span class="for-tag">PMs and non-engineers using Claude Code to prototype or automate, who keep losing the thread when one long conversation tries to do research, building, and reviewing all at once</span>
+
+          <div class="divider"></div>
+
+          <p class="section-label">The PM take</p>
+          <div class="verdict-grid">
+            <div class="verdict-col pros">
+              <h4>Pros</h4>
+              <ul>
+                <li>Each subagent gets its own context window, so a noisy task (reading 40 files) never pollutes or crowds out your main conversation</li>
+                <li>You can give each agent a tight, opinionated prompt — a "reviewer" that only critiques, a "researcher" that only summarises — instead of one generic do-everything assistant</li>
+                <li>Independent agents can run in parallel, so wide tasks like "check these five things" finish in one pass instead of five sequential ones</li>
+              </ul>
+            </div>
+            <div class="verdict-col cons">
+              <h4>Cons / caveats</h4>
+              <ul>
+                <li>Each subagent starts cold — it re-derives context you already have, so for small tasks the setup cost outweighs the benefit</li>
+                <li>Defining good agents takes upfront effort; a vague agent prompt produces vague, redundant work</li>
+                <li>More agents means more tokens and higher cost — easy to over-delegate trivial work that the main thread could just do inline</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="section-label">What real users say</p>
+          <div class="sentiment-box">
+            The recurring "aha" is context isolation — people describe finally being able to run a long build session without the main conversation drowning in file contents and search results. The flip-side complaint is cold starts: a freshly spawned subagent doesn't remember the conversation that launched it, so users learn to write self-contained task prompts or skip subagents for quick jobs. There's also steady debate about cost — power users love fanning out parallel agents, but warn newcomers not to reach for a subagent every time the main thread could just answer directly.
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="verdict-box">
+            <p class="verdict-label">Verdict</p>
+            <p>If your Claude Code sessions keep derailing because one conversation is trying to research, build, and review all at once, subagents are the fix — they keep each job in its own clean context and hand back just the answer. Start small: define one "code reviewer" subagent this week and delegate your next review to it. Don't over-reach — for quick one-shot tasks, a cold subagent costs more than it saves. The win shows up on big, multi-part work, not on errands.</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="section-label">Sources</p>
+          <ul class="sources-list">
+            <li><a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents" target="_blank" rel="noopener">Anthropic docs — Claude Code subagents</a></li>
+            <li><a href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener">Anthropic — Claude Code overview</a></li>
+            <li><a href="https://www.reddit.com/r/ClaudeAI/search/?q=subagents" target="_blank" rel="noopener">r/ClaudeAI — subagents community discussion</a></li>
+          </ul>
+
+        </div><!-- /card-expand -->
+
+      </div><!-- /card-body -->
+    </div><!-- /card week 3 -->
+
+    <!-- ─ CARD 2 ─ -->
+    <div class="card"
          data-category="LLMs"
          data-usecases="Research,Writing & Docs,Roadmapping"
+         data-date="2026-05-17"
          data-search="claude projects scoped memory persistent context llms prd research roadmapping writing docs">
 
       <div class="card-topbar">
-        <span class="label">⭐ This week's pick — Week 2</span>
+        <span class="label">Week 2</span>
         <span class="date-stamp">As of 17 May 2026</span>
       </div>
 
@@ -634,6 +746,7 @@
     <div class="card"
          data-category="App Builders"
          data-usecases="Prototyping,Workflow Automation"
+         data-date="2026-05-03"
          data-search="bolt visual version history app builders prototyping non-coder restore undo">
 
       <div class="card-topbar">
@@ -736,7 +849,10 @@
     const grid       = document.getElementById('card-grid');
     const cards      = Array.from(grid.querySelectorAll('.card'));
     const countEl    = document.getElementById('result-count');
+    const nounEl     = document.getElementById('result-noun');
     const emptyEl    = document.getElementById('empty-state');
+    const sortBtn    = document.getElementById('sort-btn');
+    const expandBtn  = document.getElementById('expand-btn');
 
     // ── Filter logic ──
     function applyFilters() {
@@ -757,10 +873,10 @@
       });
 
       countEl.textContent = visible;
-      const noun = visible === 1 ? 'feature card' : 'feature cards';
-      countEl.parentElement.innerHTML = `Showing <span id="result-count">${visible}</span> ${noun}`;
+      nounEl.textContent = visible === 1 ? 'feature card' : 'feature cards';
 
       emptyEl.style.display = visible === 0 ? 'block' : 'none';
+      syncExpandBtn();
     }
 
     // ── Chip clicks ──
@@ -786,23 +902,67 @@
       applyFilters();
     });
 
-    // ── Expand / collapse (for non-featured cards) ──
-    cards.forEach(card => {
-      if (card.classList.contains('featured')) return;
+    // ── Expand / collapse (every card) ──
+    function setCardOpen(card, open) {
+      card.classList.toggle('open', open);
+      card._toggleBtn.textContent = open ? 'Show less ↑' : 'Read more ↓';
+    }
 
+    cards.forEach(card => {
       const btn = document.createElement('button');
       btn.className = 'toggle-btn';
-      btn.textContent = 'Read more ↓';
       card.querySelector('.card-body').appendChild(btn);
+      card._toggleBtn = btn;
+
+      // This week's pick starts expanded.
+      setCardOpen(card, card.classList.contains('featured'));
 
       btn.addEventListener('click', () => {
-        const open = card.classList.toggle('open');
-        btn.textContent = open ? 'Show less ↑' : 'Read more ↓';
+        setCardOpen(card, !card.classList.contains('open'));
+        syncExpandBtn();
       });
     });
 
+    // ── Expand / collapse all ──
+    function visibleCards() {
+      return cards.filter(c => c.style.display !== 'none');
+    }
+
+    function syncExpandBtn() {
+      const vis = visibleCards();
+      const allOpen = vis.length > 0 && vis.every(c => c.classList.contains('open'));
+      expandBtn.textContent = allOpen ? 'Collapse all' : 'Expand all';
+    }
+
+    expandBtn.addEventListener('click', () => {
+      const vis = visibleCards();
+      const allOpen = vis.length > 0 && vis.every(c => c.classList.contains('open'));
+      vis.forEach(c => setCardOpen(c, !allOpen));
+      syncExpandBtn();
+    });
+
+    // ── Sort by date ──
+    let newestFirst = true;
+
+    function applySort() {
+      const sorted = [...cards].sort((a, b) => {
+        const da = a.dataset.date || '';
+        const db = b.dataset.date || '';
+        return newestFirst ? db.localeCompare(da) : da.localeCompare(db);
+      });
+      sorted.forEach(c => grid.appendChild(c));
+      sortBtn.textContent = newestFirst ? '↓ Newest first' : '↑ Oldest first';
+    }
+
+    sortBtn.addEventListener('click', () => {
+      newestFirst = !newestFirst;
+      applySort();
+    });
+
     // ── Init ──
+    applySort();
     applyFilters();
+    syncExpandBtn();
   </script>
 
 </body>
